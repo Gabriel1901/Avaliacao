@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/main.css" rel="stylesheet" type="text/css"/>
+
+        <script src="js/jquery-3.2.1.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="container ">
+            <div class="row col-xs-8 center-block">
+
+                <h4>Pesquisa clientes</h4>
+                <form method="POST" class="form" >
+                    <div id="validar" class="form-group ">
+
+                        <div id="Retorno" class="form hidden"></div>
+
+                        <label for="nome" class="control-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" >
+
+                        <button class="btn btn-primary" type="submit" >Pesquisar</button>
+
+                    </div>
+                </form>
+
+
+                <table id="PesquisaClientes" class="table table-striped hidden">
+                    <thead class="thead-default">
+                        <tr>
+                            <th class="th">Cod</th>
+                            <th class="th">Nome</th>
+                            <th class="th">Idade</th>
+                            <th class="th">Telefone</th>
+                            <th class="th">Endereço</th>
+                            <th class="th">Categoria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("form").submit(function (event)
+            {
+                event.preventDefault();
+                var nomeEnviar = $("input#nome").val();
+
+                if (nomeEnviar != "" && nomeEnviar != null) {
+
+
+                    $.post("http://localhost:8000/clientes_curl.php", {nome: nomeEnviar}, function (retorno) {
+
+
+                        $("#Retorno").addClass('hidden');
+                        $("#validar").removeClass('has-error');
+                        $("#PesquisaClientes").removeClass('hidden');
+                        var json = JSON.parse(retorno);
+
+                        $('#PesquisaClientes tbody').empty();
+                        json.forEach(function (obj, idx) {
+
+                            var tr = '<tr obj-id="' + obj.Codigo + '">'
+
+
+                                    + '<td>' + obj.codigo + '</td>'
+                                    + '<td>' + obj.nome + '</td>'
+                                    + '<td>' + obj.idade + '</td>'
+                                    + '<td>' + obj.telefone + '</td>'
+                                    + '<td>' + obj.endereco + '</td>'
+                                    + '<td>' + obj.categoria + '</td>'
+
+                                    + '</tr>';
+                            $('#PesquisaClientes tbody').append(tr);
+
+                        });
+
+
+
+                    });
+
+                    return 1;
+                } else {
+
+                    $("#Retorno").html("Você não Preencheu o Campo!");
+                    $("#Retorno").removeClass('hidden');
+                    $("#Retorno").addClass('bg-warning');
+
+                    $("#nome").focus(); //Da focu na input se ela não for digitada
+                    $("#validar").addClass('has-error');
+
+                    return 1;
+                }
+
+            });
+        });
+
+
+
+    </script>
+
+</html>

@@ -1,0 +1,19 @@
+Banco de dados:
+CREATE SCHEMA `avaliacao` DEFAULT CHARACTER SET utf8 ;
+
+Tabela1:
+CREATE TABLE `avaliacao`.`tbl_clientes` (
+  `cli_id` INT NOT NULL AUTO_INCREMENT,
+  `cli_nome` VARCHAR(45) NULL,
+  `cli_idade` INT(2) NULL,
+  `cli_telefone` INT(9) NULL,
+  `cli_endereco` VARCHAR(255) NULL,
+  `cat_categoria` INT NULL,
+  PRIMARY KEY (`cli_id`));
+
+Tabela2:
+CREATE TABLE `avaliacao`.`tbl_categoria` (
+  `cat_id` INT NOT NULL AUTO_INCREMENT,
+  `cat_nome` VARCHAR(45) NULL,
+  `cat_status` INT(1) NULL,
+  PRIMARY KEY (`cat_id`));
