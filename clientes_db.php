@@ -25,7 +25,7 @@ class clientes_db {
 
         $sql = "SELECT 
             cli_id AS 'codigo', 
-            cli_nome AS 'nome', 
+            concat( Upper(substr(cli_nome, 1,1)),lower(substr(cli_nome, 2,length(cli_nome))) ) AS 'nome', 
             cli_idade AS 'idade', 
             cli_telefone AS 'telefone', 
             cli_endereco AS 'endereco', 
